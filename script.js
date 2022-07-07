@@ -8,26 +8,31 @@ function getDadosEnderecoPorCep(cep) {
 
     xmlHttp.onreadystatechange = () => {
         if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            let dadosJSONtext = xmlHttp.responseText;
-            let dadosJSONObj = JSON.parse(dadosJSONtext);
+            let jsonTexto = xmlHttp.responseText;
+            let jsonObjeto = JSON.parse(jsonTexto);
 
-            
-
-            if(dadosJSONObj.bairro == '') {
+            if(jsonObjeto.bairro == '') {
                 document.getElementById('endereco').value = 'Não existe endereço vinculado a esse cep';
             } else {
-                document.getElementById('endereco').value = dadosJSONObj.logradouro;
+                document.getElementById('endereco').value = jsonObjeto.logradouro;
             }
 
-            if(dadosJSONObj.bairro == '') {
+            if(jsonObjeto.bairro == '') {
                 document.getElementById('bairro').value = 'Não existe bairro vinculado a esse cep';
             } else {
-                document.getElementById('bairro').value = dadosJSONObj.bairro;
+                document.getElementById('bairro').value = jsonObjeto.bairro;
             }
             
-            document.getElementById('cidade').value = dadosJSONObj.localidade;
-            document.getElementById('uf').value = dadosJSONObj.uf;
-            document.getElementById('ddd').value = dadosJSONObj.ddd;
+            document.getElementById('cidade').value = jsonObjeto.localidade;
+
+            if(jsonObjeto.complemento == '') {
+                document.getElementById('complemento').value = 'Não existe complemento no endereço informado';
+            } else {
+                document.getElementById('complemento').value = jsonObjeto.complemento;
+            }
+
+            document.getElementById('uf').value = jsonObjeto.uf;
+            document.getElementById('ddd').value = jsonObjeto.ddd;
 
         }
     }
